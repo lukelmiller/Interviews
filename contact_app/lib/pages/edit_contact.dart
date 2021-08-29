@@ -7,28 +7,40 @@ class EditContact extends StatefulWidget {
 }
 
 class _EditContactState extends State<EditContact> {
-  var _first = TextEditingController();
-  var _last = TextEditingController();
-  var _phone = TextEditingController();
-  var _email = TextEditingController();
+  Map data = {};
+  bool _init = false;
+  var _first = "";
+  var _last = "";
+  var _phone = "";
+  var _email = "";
 
   @override
   void initState() {
     super.initState();
-    parseData();
+    // print(context);
+    // parseData();
   }
 
   void parseData() {
-    setState(() {
-      _first.text = "luke";
-      _last.text = "miller";
-      _phone.text = "1234567890";
-      _email.text = "lmiller@gmail.com";
-    });
+    if (!_init && data.isNotEmpty) {
+      setState(() {
+        _first = data['contact']['first'];
+        _last = data['contact']['last'];
+        _phone = data['contact']['phone'];
+        _email = data['contact']['email'];
+        _init = true;
+      });
+    } else if (data.isEmpty) {}
   }
 
   @override
   Widget build(BuildContext context) {
+    try {
+      data = ModalRoute.of(context)!.settings.arguments as Map;
+    } catch (e) {
+      print("No data passed");
+    }
+    parseData();
     return Scaffold(
         body: Container(
       margin: const EdgeInsets.fromLTRB(50, 100, 50, 0),
@@ -43,10 +55,14 @@ class _EditContactState extends State<EditContact> {
           Padding(
               padding: const EdgeInsets.symmetric(vertical: 15),
               child: TextField(
-                controller: _first,
+                controller: new TextEditingController.fromValue(
+                    new TextEditingValue(
+                        text: _first,
+                        selection: new TextSelection.collapsed(
+                            offset: _first.length))),
                 onChanged: (String val) {
                   setState(() {
-                    _first.text = val;
+                    _first = val;
                   });
                 },
                 decoration: InputDecoration(
@@ -58,10 +74,14 @@ class _EditContactState extends State<EditContact> {
           Padding(
               padding: const EdgeInsets.symmetric(vertical: 15),
               child: TextField(
-                controller: _last,
+                controller: new TextEditingController.fromValue(
+                    new TextEditingValue(
+                        text: _last,
+                        selection:
+                            new TextSelection.collapsed(offset: _last.length))),
                 onChanged: (String val) {
                   setState(() {
-                    _last.text = val;
+                    _last = val;
                   });
                 },
                 decoration: InputDecoration(
@@ -70,14 +90,20 @@ class _EditContactState extends State<EditContact> {
                     labelText: 'Last Name'),
               )),
           Padding(
-              padding: const EdgeInsets.symmetric(vertical: 15),
+              padding: const EdgeInsets.fromLTRB(0, 15, 0, 0),
               child: TextField(
-                controller: _phone,
+                controller: new TextEditingController.fromValue(
+                    new TextEditingValue(
+                        text: _phone,
+                        selection: new TextSelection.collapsed(
+                            offset: _phone.length))),
                 onChanged: (String val) {
                   setState(() {
-                    _phone.text = val;
+                    _phone = val;
                   });
                 },
+                maxLength: 10,
+                keyboardType: TextInputType.number,
                 decoration: InputDecoration(
                     border: OutlineInputBorder(),
                     hintText: '1234567890',
@@ -86,10 +112,14 @@ class _EditContactState extends State<EditContact> {
           Padding(
               padding: const EdgeInsets.symmetric(vertical: 15),
               child: TextField(
-                controller: _email,
+                controller: new TextEditingController.fromValue(
+                    new TextEditingValue(
+                        text: _email,
+                        selection: new TextSelection.collapsed(
+                            offset: _email.length))),
                 onChanged: (String val) {
                   setState(() {
-                    _email.text = val;
+                    _email = val;
                   });
                 },
                 decoration: InputDecoration(
@@ -107,13 +137,16 @@ class _EditContactState extends State<EditContact> {
                     margin: const EdgeInsets.fromLTRB(0, 0, 55, 0),
                     child: TextButton(
                       child: Text('CANCEL'),
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.pop(context, false);
+                      },
                     ),
                   ),
                   ElevatedButton(
                     child: Text('SAVE'),
                     onPressed: () {
-                      print(_first.text);
+                      // print(_first.text);
+                      Navigator.pop(context, true);
                     },
                   )
                 ],

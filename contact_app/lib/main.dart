@@ -14,7 +14,7 @@ void main() => runApp(MaterialApp(
         brightness: Brightness.dark,
       ),
       debugShowCheckedModeBanner: false,
-      initialRoute: '/edit_contact',
+      // initialRoute: '/edit_contact',
       routes: {
         '/': (context) => Contacts(title: 'Contacts'),
         '/edit_contact': (context) => EditContact(),

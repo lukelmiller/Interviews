@@ -1,19 +1,11 @@
 import 'dart:convert';
 import 'dart:io';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 class Contacts extends StatefulWidget {
   Contacts({Key? key, required this.title}) : super(key: key);
-
-  // This widget is the home page of your application. It is stateful, meaning
-  // that it has a State object (defined below) that contains fields that affect
-  // how it looks.
-  // This class is the configuration for the state. It holds the values (in this
-  // case the title) provided by the parent (in this case the App widget) and
-  // used by the build method of the State. Fields in a Widget subclass are
-  // always marked "final".
-
   final String title;
 
   @override
@@ -99,17 +91,45 @@ class _ContactsState extends State<Contacts> {
                                         child: Text("Edit"),
                                         onTap: () {
                                           print("edit");
+                                          Navigator.pushNamed(
+                                              context, '/edit_contact',
+                                              arguments: {
+                                                'contact': _contacts[index]
+                                              });
                                         },
                                       ),
                                     ),
                                     PopupMenuItem(
                                       child: InkWell(
-                                        child: Text("Delete"),
-                                        onTap: () {
-                                          print("delete");
-                                          deleteContact(index);
-                                        },
-                                      ),
+                                          child: Text("Delete"),
+                                          onTap: () => showDialog<String>(
+                                              context: context,
+                                              builder: (BuildContext context) =>
+                                                  AlertDialog(
+                                                    title: Text("Delete " +
+                                                        _contacts[index]
+                                                            ["first"] +
+                                                        " " +
+                                                        _contacts[index]
+                                                            ["last"]),
+                                                    actions: <Widget>[
+                                                      TextButton(
+                                                          onPressed: () =>
+                                                              Navigator.pop(
+                                                                  context),
+                                                          child: const Text(
+                                                              'Cancel')),
+                                                      TextButton(
+                                                          onPressed: () => {
+                                                                deleteContact(
+                                                                    index),
+                                                                Navigator.pop(
+                                                                    context)
+                                                              },
+                                                          child: const Text(
+                                                              'Delete')),
+                                                    ],
+                                                  ))),
                                     )
                                   ];
                                 },
@@ -123,7 +143,9 @@ class _ContactsState extends State<Contacts> {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {},
+        onPressed: () {
+          Navigator.pushNamed(context, '/edit_contact');
+        },
         tooltip: 'Add Contact',
         child: Icon(Icons.add),
       ),
