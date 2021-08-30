@@ -1,2 +1,2 @@
 # Interviews
-A repo to store/share interview programming projects.
+A repo to store interview programming projects.
