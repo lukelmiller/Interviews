@@ -7,7 +7,7 @@ import 'package:contact_app/pages/view_contact.dart';
 void main() => runApp(MaterialApp(
       title: 'Contacts',
       theme: ThemeData(
-        brightness: Brightness.light,
+        brightness: Brightness.dark,
       ),
       darkTheme: ThemeData(
         brightness: Brightness.dark,
