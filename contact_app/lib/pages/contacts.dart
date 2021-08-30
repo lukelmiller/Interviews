@@ -134,45 +134,51 @@ class _ContactsState extends State<Contacts> {
                                 itemBuilder: (BuildContext context) {
                                   return [
                                     PopupMenuItem(
-                                      child: InkWell(
-                                        child: Text("Edit"),
-                                        onTap: () {
-                                          _navigateEdit(
-                                              context, _contacts[index], index);
-                                        },
+                                      child: Container(
+                                        width: double.infinity,
+                                        child: TextButton(
+                                          child: Text('Edit'),
+                                          onPressed: () {
+                                            _navigateEdit(context,
+                                                _contacts[index], index);
+                                          },
+                                        ),
                                       ),
                                     ),
                                     PopupMenuItem(
-                                      child: InkWell(
-                                          child: Text("Delete"),
-                                          onTap: () => showDialog<String>(
-                                              context: context,
-                                              builder: (BuildContext context) =>
-                                                  AlertDialog(
-                                                    title: Text("Delete " +
-                                                        _contacts[index]
-                                                            ["first"] +
-                                                        " " +
-                                                        _contacts[index]
-                                                            ["last"]),
-                                                    actions: <Widget>[
-                                                      TextButton(
-                                                          onPressed: () =>
-                                                              Navigator.pop(
-                                                                  context),
-                                                          child: const Text(
-                                                              'Cancel')),
-                                                      TextButton(
-                                                          onPressed: () => {
-                                                                deleteContact(
-                                                                    index),
-                                                                Navigator.pop(
-                                                                    context)
-                                                              },
-                                                          child: const Text(
-                                                              'Delete')),
-                                                    ],
-                                                  ))),
+                                      child: Container(
+                                          width: double.infinity,
+                                          child: TextButton(
+                                              child: Text("Delete"),
+                                              onPressed: () =>
+                                                  showDialog<String>(
+                                                      context: context,
+                                                      builder: (BuildContext
+                                                              context) =>
+                                                          AlertDialog(
+                                                            title: Text("Delete " +
+                                                                _contacts[index]
+                                                                    ["first"] +
+                                                                " " +
+                                                                _contacts[index]
+                                                                    ["last"]),
+                                                            actions: <Widget>[
+                                                              TextButton(
+                                                                  onPressed: () =>
+                                                                      Navigator.pop(
+                                                                          context),
+                                                                  child: const Text(
+                                                                      'Cancel')),
+                                                              TextButton(
+                                                                  onPressed:
+                                                                      () => {
+                                                                            deleteContact(index),
+                                                                            Navigator.pop(context)
+                                                                          },
+                                                                  child: const Text(
+                                                                      'Delete')),
+                                                            ],
+                                                          )))),
                                     )
                                   ];
                                 },
