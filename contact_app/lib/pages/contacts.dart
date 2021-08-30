@@ -40,18 +40,37 @@ class _ContactsState extends State<Contacts> {
     readJson();
   }
 
+  void _navigateEdit(BuildContext context, Object contact, int index) async {
+    final result = await Navigator.pushNamed(context, '/edit_contact',
+        arguments: {'contact': contact}) as Map;
+    if (result.isNotEmpty) {
+      setState(() {
+        _contacts[index]["first"] = result["first"];
+        _contacts[index]["last"] = result["last"];
+        _contacts[index]["phone"] = result["phone"];
+        _contacts[index]["email"] = result["email"];
+      });
+    }
+  }
+
+  void _navigateAdd(BuildContext context) async {
+    final result = await Navigator.pushNamed(context, '/edit_contact') as Map;
+    if (result.isNotEmpty) {
+      setState(() {
+        _contacts.add({
+          'first': result["first"],
+          'last': result["last"],
+          'phone': result["phone"],
+          'email': result["email"]
+        });
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
-    // This method is rerun every time setState is called, for instance as done
-    // by the _incrementCounter method above.
-    //
-    // The Flutter framework has been optimized to make rerunning build methods
-    // fast, so that you can just rebuild anything that needs updating rather
-    // than having to individually change instances of widgets.
     return Scaffold(
       appBar: AppBar(
-        // Here we take the value from the MyHomePage object that was created by
-        // the App.build method, and use it to set our appbar title.
         title: Text(widget.title),
         toolbarHeight: 35,
         // backgroundColor: Colors.transparent,
@@ -90,12 +109,8 @@ class _ContactsState extends State<Contacts> {
                                       child: InkWell(
                                         child: Text("Edit"),
                                         onTap: () {
-                                          print("edit");
-                                          Navigator.pushNamed(
-                                              context, '/edit_contact',
-                                              arguments: {
-                                                'contact': _contacts[index]
-                                              });
+                                          _navigateEdit(
+                                              context, _contacts[index], index);
                                         },
                                       ),
                                     ),
@@ -144,7 +159,7 @@ class _ContactsState extends State<Contacts> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          Navigator.pushNamed(context, '/edit_contact');
+          _navigateAdd(context);
         },
         tooltip: 'Add Contact',
         child: Icon(Icons.add),

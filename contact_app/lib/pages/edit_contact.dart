@@ -138,7 +138,7 @@ class _EditContactState extends State<EditContact> {
                     child: TextButton(
                       child: Text('CANCEL'),
                       onPressed: () {
-                        Navigator.pop(context, false);
+                        Navigator.pop(context, {});
                       },
                     ),
                   ),
@@ -146,7 +146,12 @@ class _EditContactState extends State<EditContact> {
                     child: Text('SAVE'),
                     onPressed: () {
                       // print(_first.text);
-                      Navigator.pop(context, true);
+                      Navigator.pop(context, {
+                        'first': _first,
+                        'last': _last,
+                        'phone': _phone,
+                        'email': _email
+                      });
                     },
                   )
                 ],
