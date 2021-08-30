@@ -1,11 +1,16 @@
 import 'package:flutter/material.dart';
 
+// View Contacts Page
+// Description: View a contact's attributes with options to edit/delete contact.
+// This is an easier visual to view contact information
+
 class ViewContact extends StatefulWidget {
   @override
   _ViewContactState createState() => _ViewContactState();
 }
 
 class _ViewContactState extends State<ViewContact> {
+  //Local Variables hold contact info as well as init passed data
   Map data = {};
   bool _init = false;
   var _first = "";
@@ -13,6 +18,7 @@ class _ViewContactState extends State<ViewContact> {
   var _phone = "";
   var _email = "";
 
+  //Recieves passed in data and pre-fills all know info for contact
   void parseData() {
     if (!_init && data.isNotEmpty) {
       setState(() {
@@ -22,9 +28,10 @@ class _ViewContactState extends State<ViewContact> {
         _email = data['contact']['email'];
         _init = true;
       });
-    } else if (data.isEmpty) {}
+    }
   }
 
+  //Function handles navigation to prefilled 'edit_contact' page and data i/o
   void _navigateEdit(BuildContext context) async {
     final result =
         await Navigator.pushNamed(context, '/edit_contact', arguments: {
@@ -45,6 +52,7 @@ class _ViewContactState extends State<ViewContact> {
     }
   }
 
+  //Sends flag to previous view to delete contact from map
   void deleteContact(BuildContext context) {
     Navigator.pop(context, {'delete': true});
   }
@@ -53,16 +61,18 @@ class _ViewContactState extends State<ViewContact> {
   Widget build(BuildContext context) {
     try {
       data = ModalRoute.of(context)!.settings.arguments as Map;
-    } catch (e) {
-      print("No data passed");
+      parseData();
+    } catch (error) {
+      // For Testing:
+      // print("No data passed");
     }
-    parseData();
 
     return Scaffold(
         body: Container(
       margin: const EdgeInsets.symmetric(vertical: 70, horizontal: 40),
       child: Column(
         children: [
+          //Back Button & Edit Button
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -86,6 +96,8 @@ class _ViewContactState extends State<ViewContact> {
               )
             ],
           ),
+
+          //First Name & Last Name with Icon
           Container(
             margin: const EdgeInsets.only(top: 150),
             child: Row(
@@ -105,6 +117,8 @@ class _ViewContactState extends State<ViewContact> {
               ],
             ),
           ),
+
+          //Phone Number with Icon
           Container(
             margin: const EdgeInsets.only(top: 75),
             child: Row(
@@ -124,6 +138,8 @@ class _ViewContactState extends State<ViewContact> {
               ],
             ),
           ),
+
+          //Email with Icon
           Container(
             margin: const EdgeInsets.only(top: 75),
             child: Row(
@@ -143,6 +159,8 @@ class _ViewContactState extends State<ViewContact> {
               ],
             ),
           ),
+
+          //Delete Button
           Container(
             margin: const EdgeInsets.only(top: 200),
             child: Row(

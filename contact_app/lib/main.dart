@@ -13,7 +13,11 @@ void main() => runApp(MaterialApp(
         brightness: Brightness.dark,
       ),
       debugShowCheckedModeBanner: false,
+
+      // FOR TESTING:
       // initialRoute: '/view_contact',
+
+      //Main Routes:
       routes: {
         '/': (context) => Contacts(title: 'Contacts'),
         '/edit_contact': (context) => EditContact(),
