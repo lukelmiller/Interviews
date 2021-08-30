@@ -1,16 +1,36 @@
 # contact_app
 
-A new Flutter project.
+A mockup contact app made with flutter/dart.
 
-## Getting Started
+PROMP:
+Create a mobile application in Flutter/Dart.
+The application will manipulate a contact list. Persistence to a back end is not required.
 
-This project is a starting point for a Flutter application.
+The application will be evaluated on:
+  1. Usage of state
+  2. Routing in general
+  4. Overall architecture and code quality
+  5. Styling and Animations
 
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
-
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+Requirements for the application are as follows.
+1. You may use a set of existing contacts for the list. Hard code a list to start with. The list may reside in memory and be manipulated by the add, edit, and delete functions.
+2. Contact information should consist of:
+  a. First name
+  b. Last name
+  c. Phone number
+  d. Email address
+3. Initially the user should be viewing a screen with a list of existing contacts. In the contacts list, a contact should be shown with a card style layout. Each card should consist of:
+  a. First name
+  b. Last name
+  c. Phone number
+4. From the Contact Listing screen, the user should be able to:
+  a. Edit an existing contact
+    i. All fields are editable
+    ii. Create a separate screen for editing
+  b. View a contact
+    i. Click on a contact view all their information
+  c. Delete an existing user
+    i. A simple delete with a confirmation popup. Are you sure you want to delete “Contact”?
+  d. Create a new contact
+    i. Create a separate screen for creating
+5. After any contact actions have been performed, the list must update to reflect any changes
