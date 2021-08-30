@@ -14,13 +14,6 @@ class _EditContactState extends State<EditContact> {
   var _phone = "";
   var _email = "";
 
-  @override
-  void initState() {
-    super.initState();
-    // print(context);
-    // parseData();
-  }
-
   void parseData() {
     if (!_init && data.isNotEmpty) {
       setState(() {

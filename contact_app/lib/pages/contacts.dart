@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -24,20 +23,32 @@ class _ContactsState extends State<Contacts> {
   }
 
   Future<void> deleteContact(int index) async {
-    print("deleting: " + index.toString());
     setState(() {
       _contacts.removeAt(index);
     });
-    final outer = json.encode(_contacts);
-    final out = "{'contacts':" + outer + "}";
-    // NEED to write out to json to persist data
-    // print(out);
   }
 
   @override
   void initState() {
     super.initState();
     readJson();
+  }
+
+  void _navigateView(BuildContext context, Object contact, int index) async {
+    final result = await Navigator.pushNamed(context, '/view_contact',
+        arguments: {'contact': contact}) as Map;
+    if (result.isNotEmpty) {
+      if (result["delete"]) {
+        deleteContact(index);
+      } else {
+        setState(() {
+          _contacts[index]["first"] = result["first"];
+          _contacts[index]["last"] = result["last"];
+          _contacts[index]["phone"] = result["phone"];
+          _contacts[index]["email"] = result["email"];
+        });
+      }
+    }
   }
 
   void _navigateEdit(BuildContext context, Object contact, int index) async {
@@ -73,7 +84,6 @@ class _ContactsState extends State<Contacts> {
       appBar: AppBar(
         title: Text(widget.title),
         toolbarHeight: 35,
-        // backgroundColor: Colors.transparent,
         shadowColor: Colors.transparent,
       ),
       body: Padding(
@@ -100,7 +110,7 @@ class _ContactsState extends State<Contacts> {
                                   _contacts[index]["last"]),
                               subtitle: Text(_contacts[index]["phone"]),
                               onTap: () {
-                                print(_contacts[index]["first"] + " tapped");
+                                _navigateView(context, _contacts[index], index);
                               },
                               trailing: PopupMenuButton(
                                 itemBuilder: (BuildContext context) {
